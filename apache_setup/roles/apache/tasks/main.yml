@@ -1,0 +1,17 @@
+- name: Install Apache Web Server
+  ansible.builtin.apt:
+    name: apache2
+    state: present
+  notify: Restart Apache
+
+- name: Deploy Apache Configuration File
+  ansible.builtin.template:
+    src: apache.conf.j2
+    dest: "{{ apache_config_file }}"
+  notify: Restart Apache
+
+- name: Ensure Apache Service is Running
+  ansible.builtin.service:
+    name: apache2
+    state: started
+    enabled: yes

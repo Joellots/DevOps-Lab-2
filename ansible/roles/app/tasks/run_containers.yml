@@ -1,0 +1,16 @@
+- name: Create a network for Cerebro
+    command: sudo docker network create cerebro-net
+      
+- name: Run PostgreSQL container
+  command: >
+    sudo docker run -d --name db --network cerebro-net
+    -e POSTGRES_DB=cerebro_db 
+    -e POSTGRES_USER=postgres 
+    -e POSTGRES_PASSWORD=auth_string 
+    -p 5432:5432 joellots/cerebro:db
+
+- name: Run Web App container
+  command: >
+    sudo docker run -d --name app --network cerebro-net
+    --env DB_HOST=db 
+    -p 8000:8000 joellots/cerebro:app

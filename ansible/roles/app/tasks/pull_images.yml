@@ -1,0 +1,5 @@
+- name: Pull web app image from Docker Hub
+  command: sudo docker pull joellots/cerebro:app
+
+- name: Pull database image from Docker Hub
+  command: sudo docker pull joellots/cerebro:db
